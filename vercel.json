@@ -1,15 +1,24 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "public": false,
-  "rewrites": [
+  "regions": ["sfo1"],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "api/index.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "routes": [
     {
-      "source": "/api/:path*",
-      "destination": "/index.js"
+      "src": "^/(?!api).*",
+      "dest": "/api/index.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.js"
+      "src": "^/api/.*",
+      "dest": "/api/index.js"
     }
   ]
 }
